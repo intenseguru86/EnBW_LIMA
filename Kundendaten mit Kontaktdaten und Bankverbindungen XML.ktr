@@ -469,23 +469,23 @@
     </hop>
     <hop>
       <from>Bankverbindungen CSV file input</from>
-      <to>Sort rows by CBKDNNR</to>
+      <to>Sort rows by CBKDNNR and CBZAHLWEG</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
       <from>Select values Bankverbindungen</from>
-      <to>Merge join</to>
+      <to>Merge join Bankverbindungen</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Sort rows by CBKDNNR</from>
+      <from>Sort rows by CBKDNNR and CBZAHLWEG</from>
       <to>Select values Bankverbindungen</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Merge join</from>
+      <from>Merge join Bankverbindungen</from>
       <to>Trim Strings Bankverbindungen</to>
-      <enabled>Y</enabled>
+      <enabled>N</enabled>
     </hop>
     <hop>
       <from>Trim Strings Bankverbindungen</from>
@@ -499,7 +499,7 @@
     </hop>
     <hop>
       <from>Unique rows</from>
-      <to>Merge join</to>
+      <to>Merge join Bankverbindungen</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
@@ -513,11 +513,6 @@
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Modified JavaScript value 2</from>
-      <to>Text file output</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
       <from>Sort rows by CSKDNNR</from>
       <to>Select values Kundendaten</to>
       <enabled>Y</enabled>
@@ -528,8 +523,48 @@
       <enabled>Y</enabled>
     </hop>
     <hop>
+      <from>Debitoren CSV file input</from>
+      <to>Filter out 'Zahlweg=0' rows</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Filter out 'Zahlweg=0' rows</from>
+      <to>Sort rows by CDKDNNR and CDZAHLWEG</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
       <from>Kundendaten CSV file input </from>
+      <to>Filter out 'Kundenstatus=OO or OE' rows</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Filter out 'Kundenstatus=OO or OE' rows</from>
       <to>Sort rows by CSKDNNR</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Sort rows by CDKDNNR and CDZAHLWEG</from>
+      <to>Select values Debitoren</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Select values Debitoren</from>
+      <to>Merge join</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Merge join Bankverbindungen</from>
+      <to>Merge join</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Merge join</from>
+      <to>Trim Strings Bankverbindungen</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Modified JavaScript value 2</from>
+      <to>Text file output</to>
       <enabled>Y</enabled>
     </hop>
   </order>
@@ -778,8 +813,334 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>192</xloc>
-      <yloc>704</yloc>
+      <xloc>112</xloc>
+      <yloc>688</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Debitoren CSV file input</name>
+    <type>CsvInput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <filename>C:\Projekte\EnBW_LIMA\Lima Migrationsdaten\Debitoren\34V20250128235601548000_VACRMDPF.CSV</filename>
+    <filename_field/>
+    <rownum_field/>
+    <include_filename>N</include_filename>
+    <separator>;</separator>
+    <enclosure>"</enclosure>
+    <header>Y</header>
+    <buffer_size>25000</buffer_size>
+    <lazy_conversion>Y</lazy_conversion>
+    <add_filename_result>N</add_filename_result>
+    <parallel>Y</parallel>
+    <newline_possible>N</newline_possible>
+    <format>mixed</format>
+    <encoding>UTF-8</encoding>
+    <fields>
+      <field>
+        <name>﻿CDWERK</name>
+        <type>String</type>
+        <format>#</format>
+        <currency>USD</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>15</length>
+        <precision>0</precision>
+        <trim_type>both</trim_type>
+      </field>
+      <field>
+        <name>CDUNBART</name>
+        <type>String</type>
+        <format/>
+        <currency>USD</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>1</length>
+        <precision>-1</precision>
+        <trim_type>both</trim_type>
+      </field>
+      <field>
+        <name>CDKDNNR</name>
+        <type>String</type>
+        <format>#</format>
+        <currency>USD</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>15</length>
+        <precision>0</precision>
+        <trim_type>both</trim_type>
+      </field>
+      <field>
+        <name>CDDEBNR</name>
+        <type>String</type>
+        <format>#</format>
+        <currency>USD</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>15</length>
+        <precision>0</precision>
+        <trim_type>both</trim_type>
+      </field>
+      <field>
+        <name>CDZAHLWEG</name>
+        <type>String</type>
+        <format>#</format>
+        <currency>USD</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>15</length>
+        <precision>0</precision>
+        <trim_type>both</trim_type>
+      </field>
+      <field>
+        <name>CDMAAUS</name>
+        <type>String</type>
+        <format>#</format>
+        <currency>USD</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>15</length>
+        <precision>0</precision>
+        <trim_type>both</trim_type>
+      </field>
+      <field>
+        <name>CDSPEKZ</name>
+        <type>String</type>
+        <format>#</format>
+        <currency>USD</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>15</length>
+        <precision>0</precision>
+        <trim_type>both</trim_type>
+      </field>
+      <field>
+        <name>CDTBZUS</name>
+        <type>String</type>
+        <format>#</format>
+        <currency>USD</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>15</length>
+        <precision>0</precision>
+        <trim_type>both</trim_type>
+      </field>
+      <field>
+        <name>CDNRSCH</name>
+        <type>String</type>
+        <format/>
+        <currency>USD</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>14</length>
+        <precision>-1</precision>
+        <trim_type>both</trim_type>
+      </field>
+      <field>
+        <name>CDINF3A</name>
+        <type>String</type>
+        <format>#</format>
+        <currency>USD</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>15</length>
+        <precision>0</precision>
+        <trim_type>both</trim_type>
+      </field>
+      <field>
+        <name>CDZWECK</name>
+        <type>String</type>
+        <format>#</format>
+        <currency>USD</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>15</length>
+        <precision>0</precision>
+        <trim_type>both</trim_type>
+      </field>
+      <field>
+        <name>CDOFFEN</name>
+        <type>String</type>
+        <format>#,###</format>
+        <currency>USD</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>15</length>
+        <precision>0</precision>
+        <trim_type>both</trim_type>
+      </field>
+      <field>
+        <name>CDMANKY</name>
+        <type>String</type>
+        <format>#</format>
+        <currency>USD</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>15</length>
+        <precision>0</precision>
+        <trim_type>both</trim_type>
+      </field>
+      <field>
+        <name>CDKREIS</name>
+        <type>String</type>
+        <format>#</format>
+        <currency>USD</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>15</length>
+        <precision>0</precision>
+        <trim_type>both</trim_type>
+      </field>
+      <field>
+        <name>CDFIFA</name>
+        <type>String</type>
+        <format/>
+        <currency>USD</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>3</length>
+        <precision>-1</precision>
+        <trim_type>both</trim_type>
+      </field>
+      <field>
+        <name>CDFADEB</name>
+        <type>String</type>
+        <format/>
+        <currency>USD</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>3</length>
+        <precision>-1</precision>
+        <trim_type>both</trim_type>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>144</xloc>
+      <yloc>912</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Filter out 'Kundenstatus=OO or OE' rows</name>
+    <type>FilterRows</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <send_true_to/>
+    <send_false_to/>
+    <compare>
+      <condition>
+        <negated>N</negated>
+        <conditions>
+          <condition>
+            <negated>Y</negated>
+            <leftvalue>CSSTATUS</leftvalue>
+            <function>=</function>
+            <rightvalue/>
+            <value>
+              <name>constant</name>
+              <type>String</type>
+              <text>OO</text>
+              <length>-1</length>
+              <precision>-1</precision>
+              <isnull>N</isnull>
+              <mask/>
+            </value>
+          </condition>
+          <condition>
+            <negated>Y</negated>
+            <operator>AND</operator>
+            <leftvalue>CSSTATUS</leftvalue>
+            <function>=</function>
+            <rightvalue/>
+            <value>
+              <name>constant</name>
+              <type>String</type>
+              <text>OE</text>
+              <length>-1</length>
+              <precision>-1</precision>
+              <isnull>N</isnull>
+              <mask/>
+            </value>
+          </condition>
+        </conditions>
+      </condition>
+    </compare>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>304</xloc>
+      <yloc>304</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Filter out 'Zahlweg=0' rows</name>
+    <type>FilterRows</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <send_true_to/>
+    <send_false_to/>
+    <compare>
+      <condition>
+        <negated>Y</negated>
+        <leftvalue>CDZAHLWEG</leftvalue>
+        <function>=</function>
+        <rightvalue/>
+        <value>
+          <name>constant</name>
+          <type>String</type>
+          <text>0</text>
+          <length>-1</length>
+          <precision>-1</precision>
+          <isnull>N</isnull>
+          <mask/>
+        </value>
+      </condition>
+    </compare>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>320</xloc>
+      <yloc>896</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -844,6 +1205,24 @@
         <type>CONCAT_COMMA</type>
         <valuefield/>
       </field>
+      <field>
+        <aggregate>CDKDNNR</aggregate>
+        <subject>CDKDNNR</subject>
+        <type>CONCAT_COMMA</type>
+        <valuefield/>
+      </field>
+      <field>
+        <aggregate>CDZAHLWEG</aggregate>
+        <subject>CDZAHLWEG</subject>
+        <type>CONCAT_COMMA</type>
+        <valuefield/>
+      </field>
+      <field>
+        <aggregate>CDDEBNR</aggregate>
+        <subject>CDDEBNR</subject>
+        <type>CONCAT_COMMA</type>
+        <valuefield/>
+      </field>
     </fields>
     <attributes/>
     <cluster_schema/>
@@ -854,8 +1233,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1280</xloc>
-      <yloc>560</yloc>
+      <xloc>1296</xloc>
+      <yloc>592</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1040,60 +1419,7 @@
     </remotesteps>
     <GUI>
       <xloc>1424</xloc>
-      <yloc>336</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>JSON input</name>
-    <type>JsonInput</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <include>N</include>
-    <include_field/>
-    <rownum>N</rownum>
-    <addresultfile>N</addresultfile>
-    <readurl>N</readurl>
-    <removeSourceField>N</removeSourceField>
-    <IsIgnoreEmptyFile>N</IsIgnoreEmptyFile>
-    <doNotFailIfNoFile>Y</doNotFailIfNoFile>
-    <ignoreMissingPath>Y</ignoreMissingPath>
-    <defaultPathLeafToNull>Y</defaultPathLeafToNull>
-    <includeNulls>N</includeNulls>
-    <rownum_field/>
-    <file>
-    </file>
-    <fields>
-    </fields>
-    <limit>0</limit>
-    <IsInFields>N</IsInFields>
-    <IsAFile>N</IsAFile>
-    <valueField/>
-    <shortFileFieldName/>
-    <pathFieldName/>
-    <hiddenFieldName/>
-    <lastModificationTimeFieldName/>
-    <uriNameFieldName/>
-    <rootUriNameFieldName/>
-    <extensionFieldName/>
-    <sizeFieldName/>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>288</xloc>
-      <yloc>480</yloc>
+      <yloc>352</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1540,8 +1866,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>128</xloc>
-      <yloc>352</yloc>
+      <xloc>112</xloc>
+      <yloc>416</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1572,73 +1898,18 @@
     <encoding>UTF-8</encoding>
     <fields>
       <field>
-        <name>﻿CSWERK</name>
-        <type>String</type>
-        <format>#</format>
-        <currency>USD</currency>
-        <decimal>.</decimal>
-        <group>,</group>
-        <length>15</length>
-        <precision>0</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>CSKDNNR</name>
-        <type>String</type>
-        <format>#</format>
-        <currency>USD</currency>
-        <decimal>.</decimal>
-        <group>,</group>
-        <length>15</length>
-        <precision>0</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>CSKDNNA</name>
-        <type>String</type>
-        <format>#</format>
-        <currency>USD</currency>
-        <decimal>.</decimal>
-        <group>,</group>
-        <length>15</length>
-        <precision>0</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>CSVNAME</name>
+        <name>CSADRART</name>
         <type>String</type>
         <format/>
         <currency>USD</currency>
         <decimal>.</decimal>
         <group>,</group>
-        <length>19</length>
+        <length>5</length>
         <precision>-1</precision>
         <trim_type>none</trim_type>
       </field>
       <field>
-        <name>CSNNAME</name>
-        <type>String</type>
-        <format/>
-        <currency>USD</currency>
-        <decimal>.</decimal>
-        <group>,</group>
-        <length>40</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>CSNAME</name>
-        <type>String</type>
-        <format/>
-        <currency>USD</currency>
-        <decimal>.</decimal>
-        <group>,</group>
-        <length>40</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>CSNAM2</name>
+        <name>CSADRZUS1</name>
         <type>String</type>
         <format/>
         <currency>USD</currency>
@@ -1649,234 +1920,14 @@
         <trim_type>none</trim_type>
       </field>
       <field>
-        <name>CSNAM3</name>
+        <name>CSADRZUS2</name>
         <type>String</type>
         <format/>
         <currency>USD</currency>
         <decimal>.</decimal>
         <group>,</group>
-        <length>25</length>
+        <length>24</length>
         <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>CSANSPR</name>
-        <type>String</type>
-        <format/>
-        <currency>USD</currency>
-        <decimal>.</decimal>
-        <group>,</group>
-        <length>1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>CSANSCH</name>
-        <type>String</type>
-        <format/>
-        <currency>USD</currency>
-        <decimal>.</decimal>
-        <group>,</group>
-        <length>16</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>CSANRED</name>
-        <type>String</type>
-        <format/>
-        <currency>USD</currency>
-        <decimal>.</decimal>
-        <group>,</group>
-        <length>40</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>CSANRAN</name>
-        <type>String</type>
-        <format/>
-        <currency>USD</currency>
-        <decimal>.</decimal>
-        <group>,</group>
-        <length>1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>CSVNAM2</name>
-        <type>String</type>
-        <format/>
-        <currency>USD</currency>
-        <decimal>.</decimal>
-        <group>,</group>
-        <length>10</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>CSNNAM2</name>
-        <type>String</type>
-        <format/>
-        <currency>USD</currency>
-        <decimal>.</decimal>
-        <group>,</group>
-        <length>14</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>CSSTR</name>
-        <type>String</type>
-        <format/>
-        <currency>USD</currency>
-        <decimal>.</decimal>
-        <group>,</group>
-        <length>26</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>CSNATKZ</name>
-        <type>String</type>
-        <format/>
-        <currency>USD</currency>
-        <decimal>.</decimal>
-        <group>,</group>
-        <length>2</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>CSNATBE</name>
-        <type>String</type>
-        <format/>
-        <currency>USD</currency>
-        <decimal>.</decimal>
-        <group>,</group>
-        <length>11</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>CSPLZ</name>
-        <type>String</type>
-        <format>#</format>
-        <currency>USD</currency>
-        <decimal>.</decimal>
-        <group>,</group>
-        <length>15</length>
-        <precision>0</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>CSORT</name>
-        <type>String</type>
-        <format/>
-        <currency>USD</currency>
-        <decimal>.</decimal>
-        <group>,</group>
-        <length>16</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>CSTELVW</name>
-        <type>String</type>
-        <format/>
-        <currency>USD</currency>
-        <decimal>.</decimal>
-        <group>,</group>
-        <length>9</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>CSTELNR</name>
-        <type>String</type>
-        <format/>
-        <currency>USD</currency>
-        <decimal>.</decimal>
-        <group>,</group>
-        <length>10</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>CSFAXVW</name>
-        <type>String</type>
-        <format/>
-        <currency>USD</currency>
-        <decimal>.</decimal>
-        <group>,</group>
-        <length>9</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>CSFAXNR</name>
-        <type>String</type>
-        <format/>
-        <currency>USD</currency>
-        <decimal>.</decimal>
-        <group>,</group>
-        <length>10</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>CSTL2VW</name>
-        <type>String</type>
-        <format>#</format>
-        <currency>USD</currency>
-        <decimal>.</decimal>
-        <group>,</group>
-        <length>15</length>
-        <precision>0</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>CSTL2NR</name>
-        <type>String</type>
-        <format/>
-        <currency>USD</currency>
-        <decimal>.</decimal>
-        <group>,</group>
-        <length>8</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>CSEMAIL</name>
-        <type>String</type>
-        <format/>
-        <currency>USD</currency>
-        <decimal>.</decimal>
-        <group>,</group>
-        <length>31</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>CSKONTA</name>
-        <type>String</type>
-        <format/>
-        <currency>USD</currency>
-        <decimal>.</decimal>
-        <group>,</group>
-        <length>31</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>CSGEBDT</name>
-        <type>String</type>
-        <format>#,###.#</format>
-        <currency>USD</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <length>10</length>
-        <precision>4</precision>
         <trim_type>none</trim_type>
       </field>
       <field>
@@ -1902,7 +1953,172 @@
         <trim_type>none</trim_type>
       </field>
       <field>
-        <name>CSSTAKZ</name>
+        <name>CSAKTDT</name>
+        <type>String</type>
+        <format>#</format>
+        <currency>USD</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>15</length>
+        <precision>0</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>CSANLNR</name>
+        <type>String</type>
+        <format>#</format>
+        <currency>USD</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>15</length>
+        <precision>0</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>CSANONYMDT</name>
+        <type>String</type>
+        <format>#</format>
+        <currency>USD</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>15</length>
+        <precision>0</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>CSANRAN</name>
+        <type>String</type>
+        <format/>
+        <currency>USD</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>CSANRED</name>
+        <type>String</type>
+        <format/>
+        <currency>USD</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>40</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>CSANSCH</name>
+        <type>String</type>
+        <format/>
+        <currency>USD</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>16</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>CSANSPR</name>
+        <type>String</type>
+        <format/>
+        <currency>USD</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>CSANSPRP1</name>
+        <type>String</type>
+        <format>#</format>
+        <currency>USD</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>15</length>
+        <precision>0</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>CSANSPRP2</name>
+        <type>String</type>
+        <format>#</format>
+        <currency>USD</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>15</length>
+        <precision>0</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>CSANZLOGIN</name>
+        <type>String</type>
+        <format>#</format>
+        <currency>USD</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>15</length>
+        <precision>0</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>CSBITEXT1</name>
+        <type>String</type>
+        <format/>
+        <currency>USD</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>13</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>CSBITEXT2</name>
+        <type>String</type>
+        <format/>
+        <currency>USD</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>13</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>CSBITEXT3</name>
+        <type>String</type>
+        <format/>
+        <currency>USD</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>13</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>CSBITEXT4</name>
+        <type>String</type>
+        <format/>
+        <currency>USD</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>13</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>CSBITEXT5</name>
+        <type>String</type>
+        <format>#</format>
+        <currency>USD</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>15</length>
+        <precision>0</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>CSBITEXT6</name>
         <type>String</type>
         <format>#</format>
         <currency>USD</currency>
@@ -1924,7 +2140,7 @@
         <trim_type>none</trim_type>
       </field>
       <field>
-        <name>CSAKTDT</name>
+        <name>CSBRALA</name>
         <type>String</type>
         <format>#</format>
         <currency>USD</currency>
@@ -1935,7 +2151,612 @@
         <trim_type>none</trim_type>
       </field>
       <field>
+        <name>CSBRANCH</name>
+        <type>String</type>
+        <format>#</format>
+        <currency>USD</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>15</length>
+        <precision>0</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>CSCITY</name>
+        <type>String</type>
+        <format/>
+        <currency>USD</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>16</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>CSEINWIL</name>
+        <type>String</type>
+        <format>#</format>
+        <currency>USD</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>15</length>
+        <precision>0</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>CSEMAIL</name>
+        <type>String</type>
+        <format/>
+        <currency>USD</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>31</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>CSFANAME1</name>
+        <type>String</type>
+        <format/>
+        <currency>USD</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>40</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>CSFANAME2</name>
+        <type>String</type>
+        <format/>
+        <currency>USD</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>28</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>CSFAXNR</name>
+        <type>String</type>
+        <format/>
+        <currency>USD</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>10</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>CSFAXVW</name>
+        <type>String</type>
+        <format/>
+        <currency>USD</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>9</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
         <name>CSFIRNR</name>
+        <type>String</type>
+        <format>#</format>
+        <currency>USD</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>15</length>
+        <precision>0</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>CSGEBDT</name>
+        <type>String</type>
+        <format>#,###.#</format>
+        <currency>USD</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>10</length>
+        <precision>4</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>CSGEBDT2</name>
+        <type>String</type>
+        <format>#</format>
+        <currency>USD</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>15</length>
+        <precision>0</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>CSHANDLE</name>
+        <type>String</type>
+        <format>#</format>
+        <currency>USD</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>15</length>
+        <precision>0</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>CSHAUSNR</name>
+        <type>String</type>
+        <format>#</format>
+        <currency>USD</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>15</length>
+        <precision>0</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>CSHAUSNRST</name>
+        <type>String</type>
+        <format/>
+        <currency>USD</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>4</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>CSINF3A</name>
+        <type>String</type>
+        <format>#</format>
+        <currency>USD</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>15</length>
+        <precision>0</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>CSINFO1</name>
+        <type>String</type>
+        <format>#</format>
+        <currency>USD</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>15</length>
+        <precision>0</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>CSINFO2</name>
+        <type>String</type>
+        <format>#</format>
+        <currency>USD</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>15</length>
+        <precision>0</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>CSINFO3</name>
+        <type>String</type>
+        <format>#</format>
+        <currency>USD</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>15</length>
+        <precision>0</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>CSINTBR</name>
+        <type>String</type>
+        <format>#</format>
+        <currency>USD</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>15</length>
+        <precision>0</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>CSKAT</name>
+        <type>String</type>
+        <format>#</format>
+        <currency>USD</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>15</length>
+        <precision>0</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>CSKDNNA</name>
+        <type>String</type>
+        <format>#</format>
+        <currency>USD</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>15</length>
+        <precision>0</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>CSKDNNR</name>
+        <type>String</type>
+        <format>#</format>
+        <currency>USD</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>15</length>
+        <precision>0</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>CSKENN1</name>
+        <type>String</type>
+        <format/>
+        <currency>USD</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>2</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>CSKENN2</name>
+        <type>String</type>
+        <format/>
+        <currency>USD</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>2</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>CSKENN3</name>
+        <type>String</type>
+        <format/>
+        <currency>USD</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>2</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>CSKENN4</name>
+        <type>String</type>
+        <format/>
+        <currency>USD</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>2</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>CSKENN5</name>
+        <type>String</type>
+        <format>#</format>
+        <currency>USD</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>15</length>
+        <precision>0</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>CSKENN6</name>
+        <type>String</type>
+        <format>#</format>
+        <currency>USD</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>15</length>
+        <precision>0</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>CSKONTA</name>
+        <type>String</type>
+        <format/>
+        <currency>USD</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>31</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>CSLLOGIN</name>
+        <type>String</type>
+        <format>#</format>
+        <currency>USD</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>15</length>
+        <precision>0</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>CSMWKZ</name>
+        <type>String</type>
+        <format>#</format>
+        <currency>USD</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>15</length>
+        <precision>0</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>CSNAM2</name>
+        <type>String</type>
+        <format/>
+        <currency>USD</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>30</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>CSNAM3</name>
+        <type>String</type>
+        <format/>
+        <currency>USD</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>25</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>CSNAME</name>
+        <type>String</type>
+        <format/>
+        <currency>USD</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>40</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>CSNATBE</name>
+        <type>String</type>
+        <format/>
+        <currency>USD</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>11</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>CSNATKZ</name>
+        <type>String</type>
+        <format/>
+        <currency>USD</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>2</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>CSNNAM2</name>
+        <type>String</type>
+        <format/>
+        <currency>USD</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>14</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>CSNNAME</name>
+        <type>String</type>
+        <format/>
+        <currency>USD</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>40</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>CSORT</name>
+        <type>String</type>
+        <format/>
+        <currency>USD</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>16</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>CSP1LNNAME</name>
+        <type>String</type>
+        <format/>
+        <currency>USD</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>40</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>CSP1LVNAME</name>
+        <type>String</type>
+        <format/>
+        <currency>USD</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>19</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>CSP1TITEL</name>
+        <type>String</type>
+        <format>#</format>
+        <currency>USD</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>15</length>
+        <precision>0</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>CSP2ANRAN</name>
+        <type>String</type>
+        <format>#</format>
+        <currency>USD</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>15</length>
+        <precision>0</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>CSP2ANRED</name>
+        <type>String</type>
+        <format>#</format>
+        <currency>USD</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>15</length>
+        <precision>0</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>CSP2ANSCH</name>
+        <type>String</type>
+        <format>#</format>
+        <currency>USD</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>15</length>
+        <precision>0</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>CSP2ANSPR</name>
+        <type>String</type>
+        <format>#</format>
+        <currency>USD</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>15</length>
+        <precision>0</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>CSP2GEBDT</name>
+        <type>String</type>
+        <format/>
+        <currency>USD</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>CSP2LNNAME</name>
+        <type>String</type>
+        <format/>
+        <currency>USD</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>14</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>CSP2LVNAME</name>
+        <type>String</type>
+        <format/>
+        <currency>USD</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>10</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>CSP2TITEL</name>
+        <type>String</type>
+        <format>#</format>
+        <currency>USD</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>15</length>
+        <precision>0</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>CSPLZ</name>
+        <type>String</type>
+        <format>#</format>
+        <currency>USD</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>15</length>
+        <precision>0</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>CSPOKAT</name>
+        <type>String</type>
+        <format>#</format>
+        <currency>USD</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>15</length>
+        <precision>0</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>CSPOSTCODE</name>
+        <type>String</type>
+        <format>#</format>
+        <currency>USD</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>15</length>
+        <precision>0</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>CSPOSTFACH</name>
+        <type>String</type>
+        <format/>
+        <currency>USD</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>CSREODT</name>
+        <type>String</type>
+        <format>#</format>
+        <currency>USD</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>15</length>
+        <precision>0</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>CSRHNRB</name>
         <type>String</type>
         <format>#</format>
         <currency>USD</currency>
@@ -1968,17 +2789,6 @@
         <trim_type>none</trim_type>
       </field>
       <field>
-        <name>CSRHNRB</name>
-        <type>String</type>
-        <format>#</format>
-        <currency>USD</currency>
-        <decimal>.</decimal>
-        <group>,</group>
-        <length>15</length>
-        <precision>0</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
         <name>CSRZUSB</name>
         <type>String</type>
         <format>#</format>
@@ -1990,84 +2800,18 @@
         <trim_type>none</trim_type>
       </field>
       <field>
-        <name>CSHANDLE</name>
-        <type>String</type>
-        <format>#</format>
-        <currency>USD</currency>
-        <decimal>.</decimal>
-        <group>,</group>
-        <length>15</length>
-        <precision>0</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>CSANLNR</name>
-        <type>String</type>
-        <format>#</format>
-        <currency>USD</currency>
-        <decimal>.</decimal>
-        <group>,</group>
-        <length>15</length>
-        <precision>0</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>CSGEBDT2</name>
-        <type>String</type>
-        <format>#</format>
-        <currency>USD</currency>
-        <decimal>.</decimal>
-        <group>,</group>
-        <length>15</length>
-        <precision>0</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>CSINTBR</name>
-        <type>String</type>
-        <format>#</format>
-        <currency>USD</currency>
-        <decimal>.</decimal>
-        <group>,</group>
-        <length>15</length>
-        <precision>0</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>CSUNBART</name>
-        <type>String</type>
-        <format/>
-        <currency>USD</currency>
-        <decimal>.</decimal>
-        <group>,</group>
-        <length>1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>CSWERINF</name>
-        <type>String</type>
-        <format/>
-        <currency>USD</currency>
-        <decimal>.</decimal>
-        <group>,</group>
-        <length>1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>CSEINWIL</name>
-        <type>String</type>
-        <format>#</format>
-        <currency>USD</currency>
-        <decimal>.</decimal>
-        <group>,</group>
-        <length>15</length>
-        <precision>0</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
         <name>CSSACHB</name>
+        <type>String</type>
+        <format>#</format>
+        <currency>USD</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>15</length>
+        <precision>0</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>CSSAMBU</name>
         <type>String</type>
         <format>#</format>
         <currency>USD</currency>
@@ -2144,83 +2888,6 @@
         <trim_type>none</trim_type>
       </field>
       <field>
-        <name>CSKAT</name>
-        <type>String</type>
-        <format>#</format>
-        <currency>USD</currency>
-        <decimal>.</decimal>
-        <group>,</group>
-        <length>15</length>
-        <precision>0</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>CSSTENR</name>
-        <type>String</type>
-        <format>#</format>
-        <currency>USD</currency>
-        <decimal>.</decimal>
-        <group>,</group>
-        <length>15</length>
-        <precision>0</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>CSMWKZ</name>
-        <type>String</type>
-        <format>#</format>
-        <currency>USD</currency>
-        <decimal>.</decimal>
-        <group>,</group>
-        <length>15</length>
-        <precision>0</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>CSVSTKN</name>
-        <type>String</type>
-        <format/>
-        <currency>USD</currency>
-        <decimal>.</decimal>
-        <group>,</group>
-        <length>1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>CSSAMBU</name>
-        <type>String</type>
-        <format>#</format>
-        <currency>USD</currency>
-        <decimal>.</decimal>
-        <group>,</group>
-        <length>15</length>
-        <precision>0</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>CSREODT</name>
-        <type>String</type>
-        <format>#</format>
-        <currency>USD</currency>
-        <decimal>.</decimal>
-        <group>,</group>
-        <length>15</length>
-        <precision>0</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>CSTYP</name>
-        <type>String</type>
-        <format/>
-        <currency>USD</currency>
-        <decimal>.</decimal>
-        <group>,</group>
-        <length>1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
         <name>CSSEGM</name>
         <type>String</type>
         <format>#</format>
@@ -2243,7 +2910,7 @@
         <trim_type>none</trim_type>
       </field>
       <field>
-        <name>CSBRANCH</name>
+        <name>CSSORTST</name>
         <type>String</type>
         <format>#</format>
         <currency>USD</currency>
@@ -2254,7 +2921,7 @@
         <trim_type>none</trim_type>
       </field>
       <field>
-        <name>CSBRALA</name>
+        <name>CSSPERRKZ</name>
         <type>String</type>
         <format>#</format>
         <currency>USD</currency>
@@ -2262,6 +2929,72 @@
         <group>,</group>
         <length>15</length>
         <precision>0</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>CSSTAKZ</name>
+        <type>String</type>
+        <format>#</format>
+        <currency>USD</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>15</length>
+        <precision>0</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>CSSTATUS</name>
+        <type>String</type>
+        <format/>
+        <currency>USD</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>2</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>CSSTENR</name>
+        <type>String</type>
+        <format>#</format>
+        <currency>USD</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>15</length>
+        <precision>0</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>CSSTR</name>
+        <type>String</type>
+        <format/>
+        <currency>USD</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>26</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>CSSTRASA</name>
+        <type>String</type>
+        <format/>
+        <currency>USD</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>26</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>CSSTRASSE</name>
+        <type>String</type>
+        <format/>
+        <currency>USD</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>26</length>
+        <precision>-1</precision>
         <trim_type>none</trim_type>
       </field>
       <field>
@@ -2375,6 +3108,105 @@
         <trim_type>none</trim_type>
       </field>
       <field>
+        <name>CSTELNR</name>
+        <type>String</type>
+        <format/>
+        <currency>USD</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>10</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>CSTELVW</name>
+        <type>String</type>
+        <format/>
+        <currency>USD</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>9</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>CSTL2NR</name>
+        <type>String</type>
+        <format/>
+        <currency>USD</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>8</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>CSTL2VW</name>
+        <type>String</type>
+        <format>#</format>
+        <currency>USD</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>15</length>
+        <precision>0</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>CSTYP</name>
+        <type>String</type>
+        <format/>
+        <currency>USD</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>CSUNBART</name>
+        <type>String</type>
+        <format/>
+        <currency>USD</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>CSVNAM2</name>
+        <type>String</type>
+        <format/>
+        <currency>USD</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>10</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>CSVNAME</name>
+        <type>String</type>
+        <format/>
+        <currency>USD</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>19</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>CSVSTKN</name>
+        <type>String</type>
+        <format/>
+        <currency>USD</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
         <name>CSW01</name>
         <type>String</type>
         <format>#</format>
@@ -2485,531 +3317,14 @@
         <trim_type>none</trim_type>
       </field>
       <field>
-        <name>CSINFO1</name>
-        <type>String</type>
-        <format>#</format>
-        <currency>USD</currency>
-        <decimal>.</decimal>
-        <group>,</group>
-        <length>15</length>
-        <precision>0</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>CSINFO2</name>
-        <type>String</type>
-        <format>#</format>
-        <currency>USD</currency>
-        <decimal>.</decimal>
-        <group>,</group>
-        <length>15</length>
-        <precision>0</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>CSINFO3</name>
-        <type>String</type>
-        <format>#</format>
-        <currency>USD</currency>
-        <decimal>.</decimal>
-        <group>,</group>
-        <length>15</length>
-        <precision>0</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>CSINF3A</name>
-        <type>String</type>
-        <format>#</format>
-        <currency>USD</currency>
-        <decimal>.</decimal>
-        <group>,</group>
-        <length>15</length>
-        <precision>0</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>CSKENN1</name>
+        <name>CSWERINF</name>
         <type>String</type>
         <format/>
         <currency>USD</currency>
         <decimal>.</decimal>
         <group>,</group>
-        <length>2</length>
+        <length>1</length>
         <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>CSBITEXT1</name>
-        <type>String</type>
-        <format/>
-        <currency>USD</currency>
-        <decimal>.</decimal>
-        <group>,</group>
-        <length>13</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>CSKENN2</name>
-        <type>String</type>
-        <format/>
-        <currency>USD</currency>
-        <decimal>.</decimal>
-        <group>,</group>
-        <length>2</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>CSBITEXT2</name>
-        <type>String</type>
-        <format/>
-        <currency>USD</currency>
-        <decimal>.</decimal>
-        <group>,</group>
-        <length>13</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>CSKENN3</name>
-        <type>String</type>
-        <format/>
-        <currency>USD</currency>
-        <decimal>.</decimal>
-        <group>,</group>
-        <length>2</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>CSBITEXT3</name>
-        <type>String</type>
-        <format/>
-        <currency>USD</currency>
-        <decimal>.</decimal>
-        <group>,</group>
-        <length>13</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>CSKENN4</name>
-        <type>String</type>
-        <format/>
-        <currency>USD</currency>
-        <decimal>.</decimal>
-        <group>,</group>
-        <length>2</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>CSBITEXT4</name>
-        <type>String</type>
-        <format/>
-        <currency>USD</currency>
-        <decimal>.</decimal>
-        <group>,</group>
-        <length>13</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>CSKENN5</name>
-        <type>String</type>
-        <format>#</format>
-        <currency>USD</currency>
-        <decimal>.</decimal>
-        <group>,</group>
-        <length>15</length>
-        <precision>0</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>CSBITEXT5</name>
-        <type>String</type>
-        <format>#</format>
-        <currency>USD</currency>
-        <decimal>.</decimal>
-        <group>,</group>
-        <length>15</length>
-        <precision>0</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>CSKENN6</name>
-        <type>String</type>
-        <format>#</format>
-        <currency>USD</currency>
-        <decimal>.</decimal>
-        <group>,</group>
-        <length>15</length>
-        <precision>0</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>CSBITEXT6</name>
-        <type>String</type>
-        <format>#</format>
-        <currency>USD</currency>
-        <decimal>.</decimal>
-        <group>,</group>
-        <length>15</length>
-        <precision>0</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>CSSTATUS</name>
-        <type>String</type>
-        <format/>
-        <currency>USD</currency>
-        <decimal>.</decimal>
-        <group>,</group>
-        <length>2</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>CSSTRASA</name>
-        <type>String</type>
-        <format/>
-        <currency>USD</currency>
-        <decimal>.</decimal>
-        <group>,</group>
-        <length>26</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>CSSORTST</name>
-        <type>String</type>
-        <format>#</format>
-        <currency>USD</currency>
-        <decimal>.</decimal>
-        <group>,</group>
-        <length>15</length>
-        <precision>0</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>CSLLOGIN</name>
-        <type>String</type>
-        <format>#</format>
-        <currency>USD</currency>
-        <decimal>.</decimal>
-        <group>,</group>
-        <length>15</length>
-        <precision>0</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>CSANZLOGIN</name>
-        <type>String</type>
-        <format>#</format>
-        <currency>USD</currency>
-        <decimal>.</decimal>
-        <group>,</group>
-        <length>15</length>
-        <precision>0</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>CSANSPRP1</name>
-        <type>String</type>
-        <format>#</format>
-        <currency>USD</currency>
-        <decimal>.</decimal>
-        <group>,</group>
-        <length>15</length>
-        <precision>0</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>CSANSPRP2</name>
-        <type>String</type>
-        <format>#</format>
-        <currency>USD</currency>
-        <decimal>.</decimal>
-        <group>,</group>
-        <length>15</length>
-        <precision>0</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>CSSPERRKZ</name>
-        <type>String</type>
-        <format>#</format>
-        <currency>USD</currency>
-        <decimal>.</decimal>
-        <group>,</group>
-        <length>15</length>
-        <precision>0</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>CSANONYMDT</name>
-        <type>String</type>
-        <format>#</format>
-        <currency>USD</currency>
-        <decimal>.</decimal>
-        <group>,</group>
-        <length>15</length>
-        <precision>0</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>CSP2ANSPR</name>
-        <type>String</type>
-        <format>#</format>
-        <currency>USD</currency>
-        <decimal>.</decimal>
-        <group>,</group>
-        <length>15</length>
-        <precision>0</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>CSP2TITEL</name>
-        <type>String</type>
-        <format>#</format>
-        <currency>USD</currency>
-        <decimal>.</decimal>
-        <group>,</group>
-        <length>15</length>
-        <precision>0</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>CSP2GEBDT</name>
-        <type>String</type>
-        <format/>
-        <currency>USD</currency>
-        <decimal>.</decimal>
-        <group>,</group>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>CSP2ANSCH</name>
-        <type>String</type>
-        <format>#</format>
-        <currency>USD</currency>
-        <decimal>.</decimal>
-        <group>,</group>
-        <length>15</length>
-        <precision>0</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>CSP2ANRED</name>
-        <type>String</type>
-        <format>#</format>
-        <currency>USD</currency>
-        <decimal>.</decimal>
-        <group>,</group>
-        <length>15</length>
-        <precision>0</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>CSP2ANRAN</name>
-        <type>String</type>
-        <format>#</format>
-        <currency>USD</currency>
-        <decimal>.</decimal>
-        <group>,</group>
-        <length>15</length>
-        <precision>0</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>CSADRZUS1</name>
-        <type>String</type>
-        <format/>
-        <currency>USD</currency>
-        <decimal>.</decimal>
-        <group>,</group>
-        <length>30</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>CSADRZUS2</name>
-        <type>String</type>
-        <format/>
-        <currency>USD</currency>
-        <decimal>.</decimal>
-        <group>,</group>
-        <length>24</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>CSADRART</name>
-        <type>String</type>
-        <format/>
-        <currency>USD</currency>
-        <decimal>.</decimal>
-        <group>,</group>
-        <length>5</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>CSP1LVNAME</name>
-        <type>String</type>
-        <format/>
-        <currency>USD</currency>
-        <decimal>.</decimal>
-        <group>,</group>
-        <length>19</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>CSP1LNNAME</name>
-        <type>String</type>
-        <format/>
-        <currency>USD</currency>
-        <decimal>.</decimal>
-        <group>,</group>
-        <length>40</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>CSP2LVNAME</name>
-        <type>String</type>
-        <format/>
-        <currency>USD</currency>
-        <decimal>.</decimal>
-        <group>,</group>
-        <length>10</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>CSP2LNNAME</name>
-        <type>String</type>
-        <format/>
-        <currency>USD</currency>
-        <decimal>.</decimal>
-        <group>,</group>
-        <length>14</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>CSFANAME1</name>
-        <type>String</type>
-        <format/>
-        <currency>USD</currency>
-        <decimal>.</decimal>
-        <group>,</group>
-        <length>40</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>CSFANAME2</name>
-        <type>String</type>
-        <format/>
-        <currency>USD</currency>
-        <decimal>.</decimal>
-        <group>,</group>
-        <length>28</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>CSP1TITEL</name>
-        <type>String</type>
-        <format>#</format>
-        <currency>USD</currency>
-        <decimal>.</decimal>
-        <group>,</group>
-        <length>15</length>
-        <precision>0</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>CSSTRASSE</name>
-        <type>String</type>
-        <format/>
-        <currency>USD</currency>
-        <decimal>.</decimal>
-        <group>,</group>
-        <length>26</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>CSHAUSNR</name>
-        <type>String</type>
-        <format>#</format>
-        <currency>USD</currency>
-        <decimal>.</decimal>
-        <group>,</group>
-        <length>15</length>
-        <precision>0</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>CSHAUSNRST</name>
-        <type>String</type>
-        <format/>
-        <currency>USD</currency>
-        <decimal>.</decimal>
-        <group>,</group>
-        <length>4</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>CSPOSTFACH</name>
-        <type>String</type>
-        <format/>
-        <currency>USD</currency>
-        <decimal>.</decimal>
-        <group>,</group>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>CSPOSTCODE</name>
-        <type>String</type>
-        <format>#</format>
-        <currency>USD</currency>
-        <decimal>.</decimal>
-        <group>,</group>
-        <length>15</length>
-        <precision>0</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>CSCITY</name>
-        <type>String</type>
-        <format/>
-        <currency>USD</currency>
-        <decimal>.</decimal>
-        <group>,</group>
-        <length>16</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>CSPOKAT</name>
-        <type>String</type>
-        <format>#</format>
-        <currency>USD</currency>
-        <decimal>.</decimal>
-        <group>,</group>
-        <length>15</length>
-        <precision>0</precision>
         <trim_type>none</trim_type>
       </field>
       <field>
@@ -3020,6 +3335,17 @@
         <decimal/>
         <group/>
         <length>2</length>
+        <precision>0</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>﻿CSWERK</name>
+        <type>String</type>
+        <format>#</format>
+        <currency>USD</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>15</length>
         <precision>0</precision>
         <trim_type>none</trim_type>
       </field>
@@ -3050,6 +3376,42 @@
       <schema_name/>
     </partitioning>
     <join_type>LEFT OUTER</join_type>
+    <step1>Merge join Bankverbindungen</step1>
+    <step2>Select values Debitoren</step2>
+    <keys_1>
+      <key>CBKDNNR</key>
+      <key>CBZAHLWEG</key>
+    </keys_1>
+    <keys_2>
+      <key>CDKDNNR</key>
+      <key>CDZAHLWEG</key>
+    </keys_2>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>880</xloc>
+      <yloc>720</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Merge join Bankverbindungen</name>
+    <type>MergeJoin</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <join_type>LEFT OUTER</join_type>
     <step1>Unique rows</step1>
     <step2>Select values Bankverbindungen</step2>
     <keys_1>
@@ -3067,8 +3429,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>832</xloc>
-      <yloc>608</yloc>
+      <xloc>688</xloc>
+      <yloc>544</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -3101,8 +3463,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>768</xloc>
-      <yloc>224</yloc>
+      <xloc>800</xloc>
+      <yloc>288</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -3110,7 +3472,7 @@
     <name>Modified JavaScript value 2</name>
     <type>ScriptValueMod</type>
     <description/>
-    <distribute>Y</distribute>
+    <distribute>N</distribute>
     <custom_distribution/>
     <copies>1</copies>
     <partitioning>
@@ -3123,7 +3485,23 @@
       <jsScript>
         <jsScript_type>0</jsScript_type>
         <jsScript_name>Script 1</jsScript_name>
-        <jsScript_script>if (getInputRowMeta().indexOfValue("CCWERK") > 0) {
+        <jsScript_script>function getValueWithIndex(str, i, tagname) {
+	const defaultValue = "&lt;".concat(tagname).concat("/>");
+    const value = str[i];
+    return value ? "&lt;".concat(tagname).concat(">") + value.trim() + "&lt;/".concat(tagname).concat(">") : defaultValue;
+}
+
+function getValue(str, tagname) {
+	const defaultValue = "&lt;".concat(tagname).concat("/>");
+    return str ? "&lt;".concat(tagname).concat(">") + str.trim() + "&lt;/".concat(tagname).concat(">") : defaultValue;
+}
+
+function assertXMLElementNotNull(str, tagname) {
+	const defaultValue = "&lt;".concat(tagname).concat("/>");
+    return str ? "&lt;".concat(tagname).concat(">") + str + "&lt;/".concat(tagname).concat(">") : defaultValue;
+}
+
+if (getInputRowMeta().indexOfValue("CCWERK") > 0) {
    var valuesCCWERK = CCWERK.split(",");
 }
 if (getInputRowMeta().indexOfValue("CCTXNR_1") > 0) {
@@ -3176,34 +3554,31 @@ if (getInputRowMeta().indexOfValue("CCKTXT_1") > 0) {
 }
 
 var contactDataHeadArray = "";
-for (var i = 0; i &lt; valuesCCKDNNR_1.length; i++) {
- if (valuesCCKDNNR_1[0] !== "" &amp;&amp; valuesCCKDNNR_1[0] !== null &amp;&amp; valuesCCKDNNR_1[0] !== undefined) {
- var contactDataHead = "&lt;data>";
- 
-   contactDataHeadArray.push({
-      "werknummer": valuesCCWERK[i],
-      "textbausteinnummer": valuesCCTXNR_1[i],
-      "typ_des_eintrags": valuesCCTYP_1[i],
-      "kundennummer": valuesCCKDNNR_1[i],
-      "debitorennummer": valuesCCDEBNR_1[i],
-      "mandant": valuesCCUNBART_1[i],
-      "bezirksnummer": valuesCCBEZ_1[i],
-      "strassennummer": valuesCCSTRAS_1[i],
-      "hausnummer": valuesCCHAUS_1[i],
-      "zusatz": valuesCCZUS_1[i],
-      "wohnung": valuesCCWOHN_1[i],
-      "geraete_art": valuesCCGERART_1[i],
-      "energieart_geraet": valuesCCEART_1[i],
-      "fabrikat": valuesCCFABR_1[i],
-      "zaehler_nummer": valuesCCGNR_1[i],
-      "info_kennzeichen": valuesCCKENN_1[i],
-      "text_info_kz": valuesCCKTXT_1[i]
-   });
-   contactDataHead += "&lt;data>";
- }
- contactDataHeadArray += contactDataHead;
-}
 
+for (var i = 0; i &lt; valuesCCKDNNR_1.length; i++) {
+ if (valuesCCKDNNR_1[0]) {
+ var contactDataHead = "&lt;data>";
+ contactDataHead += getValueWithIndex(valuesCCWERK, i, "werknummer");
+ contactDataHead += getValueWithIndex(valuesCCTXNR_1, i, "textbausteinnummer");
+ contactDataHead += getValueWithIndex(valuesCCTYP_1, i, "typ_des_eintrags");
+ contactDataHead += getValueWithIndex(valuesCCKDNNR_1, i, "kundennummer");
+ contactDataHead += getValueWithIndex(valuesCCDEBNR_1, i, "debitorennummer");
+ contactDataHead += getValueWithIndex(valuesCCUNBART_1, i, "mandant");
+ contactDataHead += getValueWithIndex(valuesCCBEZ_1, i, "bezirksnummer");
+ contactDataHead += getValueWithIndex(valuesCCSTRAS_1, i, "strassennummer");
+ contactDataHead += getValueWithIndex(valuesCCHAUS_1, i, "hausnummer");
+ contactDataHead += getValueWithIndex(valuesCCZUS_1, i, "zusatz");
+ contactDataHead += getValueWithIndex(valuesCCWOHN_1, i, "wohnung");
+ contactDataHead += getValueWithIndex(valuesCCGERART_1, i, "geraete_art");
+ contactDataHead += getValueWithIndex(valuesCCEART_1, i, "energieart_geraet");
+ contactDataHead += getValueWithIndex(valuesCCFABR_1, i, "fabrikat");
+ contactDataHead += getValueWithIndex(valuesCCGNR_1, i, "zaehler_nummer");
+ contactDataHead += getValueWithIndex(valuesCCKENN_1, i, "info_kennzeichen");
+ contactDataHead += getValueWithIndex(valuesCCKTXT_1, i, "text_info_kz");
+ contactDataHead += "&lt;/data>";
+ contactDataHeadArray += contactDataHead;
+ }
+}
 
 if (getInputRowMeta().indexOfValue("CBWERK") > 0) {
    var valuesCBWERK = CBWERK.split(",");
@@ -3223,86 +3598,113 @@ if (getInputRowMeta().indexOfValue("CBIBAN_1") > 0) {
 if (getInputRowMeta().indexOfValue("CBGUELT_1") > 0) {
    var valuesCBGUELT_1 = CBGUELT_1.split(",");
 }
+if (getInputRowMeta().indexOfValue("CDDEBNR_1") > 0) {
+   var valuesCDDEBNR_1 = CDDEBNR_1.split(",");
+}
+
 
 var bankAccounts = "";
 
 for (var i = 0; i &lt; valuesCBKDNNR_1.length; i++) {
- if (valuesCBKDNNR_1[0] !== "" &amp;&amp; valuesCBKDNNR_1[0] !== null &amp;&amp; valuesCBKDNNR_1[0] !== undefined) {
- var bankaccount = "&lt;bankverbindung>";
- bankAccount += &lt;werknummer> + valuesCBWERK[i] + &lt;/werknummer>;
- bankAccount += &lt;mandant> + valuesCBUNBART_1[i] + &lt;/mandant>;
- bankAccount += &lt;zahlweg> + valuesCBZAHLWEG_1[i] + &lt;/zahlweg>;
- bankAccount += &lt;iban> + valuesCBIBAN_1[i] + &lt;/iban>;
- bankAccount += &lt;sepa_mandant_gueltig_ab> + valuesCBGUELT_1[i] + &lt;/sepa_mandant_gueltig_ab>;
- bankAccount += &lt;/bankverbindung>;
+ if (valuesCBKDNNR_1[0]) {
+ var bankAccount = "&lt;bankverbindung>"; 
+ bankAccount += getValueWithIndex(valuesCBWERK, i, "werknummer");
+ bankAccount += getValueWithIndex(valuesCBUNBART_1, i, "mandant");
+ bankAccount += getValueWithIndex(valuesCBZAHLWEG_1, i, "zahlweg");
+ bankAccount += getValueWithIndex(valuesCBIBAN_1, i, "iban");
+ bankAccount += getValueWithIndex(valuesCBGUELT_1, i, "sepa_mandant_gueltig_ab");
+ bankAccount += getValueWithIndex(valuesCDDEBNR_1, i, "debitor");
+ bankAccount += "&lt;/bankverbindung>";
+ bankAccounts += bankAccount;
  }
- bankAccounts += bankaccount;
 }
 
-var xml = "";
+if (typeof xml == "undefined"){
+	xml = "";
+}
+
+
 xml += "&lt;customer>";
-xml += "&lt;werk_nummer>" + CSWERK + "&lt;/werk_nummer>";
-xml += "&lt;kundennummer>" + CSKDNNR + "&lt;/kundennummer>";
-xml += "&lt;vorname>" + CSVNAME + "&lt;/vorname>";
-xml += "&lt;nachname>" + CSNNAME + "&lt;/nachname>";
-xml += "&lt;name_2_teil>" + CSNAM2 + "&lt;/name_2_teil>";
-xml += "&lt;name_3_teil>" + CSNAM3 + "&lt;/name_3_teil>";
-xml += "&lt;anredekennzeichen>" + CSANRED + "&lt;/anredekennzeichen>";
-xml += "&lt;vorname_2>" + CSVNAM2 + "&lt;/vorname_2>";
-xml += "&lt;nachname_2>" + CSNNAM2 + "&lt;/nachname_2>";
-xml += "&lt;strasse_kunde>" + CSSTR + "&lt;/strasse_kunde>";
-xml += "&lt;nationalitaet>" + CSNATKZ + "&lt;/nationalitaet>";
-xml += "&lt;laenderbezeichnung>" + CSNATBE + "&lt;/laenderbezeichnung>";
-xml += "&lt;postleitzahl>" + CSPLZ + "&lt;/postleitzahl>";
-xml += "&lt;wohnort>" + CSORT + "&lt;/wohnort>";
-xml += "&lt;telefon_vorwahl>" + CSTELVW + "&lt;/telefon_vorwahl>";
-xml += "&lt;telefonnummer>" + CSTELNR + "&lt;/telefonnummer>";
-xml += "&lt;weitere_telefonnummer>" + CSTL2VW + "&lt;/weitere_telefonnummer>";
-xml += "&lt;weitere_telefonnummer_2>" + CSTL2NR + "&lt;/weitere_telefonnummer_2>";
-xml += "&lt;email>" + CSEMAIL + "&lt;/email>";
-xml += "&lt;kontaktperson>" + CSKONTA + "&lt;/kontaktperson>";
-xml += "&lt;geburtsdatum>" + CSGEBDT + "&lt;/geburtsdatum>";
-xml += "&lt;bonitaetskennzeichen>" + CSBONIT + "&lt;/bonitaetskennzeichen>";
-xml += "&lt;von_hausnummer_kunden>" + CSRHNRV + "&lt;/von_hausnummer_kunden>";
-xml += "&lt;zusatz_hausnummer_von_kunde>" + CSRZUSA + "&lt;/zusatz_hausnummer_von_kunde>";
-xml += "&lt;bis_hausnummer_kunden>" + CSRHNRB + "&lt;/bis_hausnummer_kunden>";
-xml += "&lt;zusatz_hausnummer_bis_kunde>" + CSRZUSB + "&lt;/zusatz_hausnummer_bis_kunde>";
-xml += "&lt;geburtsdatum_2>" + CSGEBDT2 + "&lt;/geburtsdatum_2>";
-xml += "&lt;werbe_info_sperre>" + CSWERINF + "&lt;/werbe_info_sperre>";
-xml += "&lt;kategorie>" + CSKAT + "&lt;/kategorie>";
-xml += "&lt;fa_steuernummer>" + CSSTENR + "&lt;/fa_steuernummer>";
-xml += "&lt;mehrwertsteuerkennzeichen>" + CSMWKZ + "&lt;/mehrwertsteuerkennzeichen>";
-xml += "&lt;vorsteuerkennzeichen>" + CSVSTKN + "&lt;/vorsteuerkennzeichen>";
-xml += "&lt;kunden_typ>" + CSTYP + "&lt;/kunden_typ>";
-xml += "&lt;segment>" + CSSEGM + "&lt;/segment>";
-xml += "&lt;segment_langtext>" + CSSEGMLA + "&lt;/segment_langtext>";
-xml += "&lt;branche>" + CSBRANCH + "&lt;/branche>";
-xml += "&lt;branche_langtext>" + CSBRALA + "&lt;/branche_langtext>";
-xml += "&lt;infokennzeichen_1>" + CSINFO1 + "&lt;/infokennzeichen_1>";
-xml += "&lt;infokennzeichen>" + CSINF3A + "&lt;/infokennzeichen>";
-xml += "&lt;info_kennzeichen>" + CSKENN1 + "&lt;/info_kennzeichen>";
-xml += "&lt;kundenstatus>" + CSSTATUS + "&lt;/kundenstatus>";
-xml += "&lt;sperrkennzeichen>" + CSSPERRKZ + "&lt;/sperrkennzeichen>";
-xml += "&lt;titel_person_2>" + CSP2TITEL + "&lt;/titel_person_2>";
-xml += "&lt;geburtstag_person_2>" + CSP2GEBDT + "&lt;/geburtstag_person_2>";
-xml += "&lt;adresszusatz_1>" + CSADRZUS1 + "&lt;/adresszusatz_1>";
-xml += "&lt;adresszusatz_2>" + CSADRZUS2 + "&lt;/adresszusatz_2>";
-xml += "&lt;kontaktdaten_kopf>";
-xml += contactDataHeadArray;
-xml += "&lt;/kontaktdaten_kopf>";
-xml += "&lt;bankverbindungen>";
-xml += bankAccounts;
-xml += "&lt;/bankverbindungen>";
+xml += getValue(CSWERK,"werk_nummer");
+xml += getValue(CSKDNNR, "kundennummer");
+xml += getValue(CSVNAME, "vorname");
+xml += getValue(CSNNAME, "nachname");
+xml += getValue(CSNAM2, "name_2_teil")
+xml += getValue(CSNAM3, "name_3_teil");
+xml += getValue(CSANRED, "anredekennzeichen");
+xml += getValue(CSVNAM2, "vorname_2");
+xml += getValue(CSNNAM2, "nachname_2");
+xml += getValue(CSSTR, "strasse_kunde");
+xml += getValue(CSNATKZ, "nationalitaet");
+xml += getValue(CSNATBE, "laenderbezeichnung");
+xml += getValue(CSPLZ, "postleitzahl");
+xml += getValue(CSORT, "wohnort");
+xml += getValue(CSTELVW, "telefon_vorwahl");
+xml += getValue(CSTELNR, "telefonnummer");
+xml += getValue(CSTL2VW, "weitere_telefonnummer");
+xml += getValue(CSTL2NR, "weitere_telefonnummer_2");
+xml += getValue(CSEMAIL, "email");
+xml += getValue(CSKONTA, "kontaktperson");
+xml += getValue(CSGEBDT, "geburtsdatum");
+xml += getValue(CSBONIT, "bonitaetskennzeichen");
+xml += getValue(CSRHNRV, "von_hausnummer_kunden");
+xml += getValue(CSRZUSA, "zusatz_hausnummer_von_kunde");
+xml += getValue(CSRHNRB, "bis_hausnummer_kunden");
+xml += getValue(CSRZUSB, "zusatz_hausnummer_bis_kunde");
+xml += getValue(CSGEBDT2, "geburtsdatum_2");
+xml += getValue(CSWERINF, "werbe_info_sperre");
+xml += getValue(CSKAT, "kategorie");
+xml += getValue(CSSTENR, "fa_steuernummer");
+xml += getValue(CSMWKZ, "mehrwertsteuerkennzeichen");
+xml += getValue(CSVSTKN, "vorsteuerkennzeichen");
+xml += getValue(CSTYP, "kunden_typ");
+xml += getValue(CSSEGM, "segment");
+xml += getValue(CSSEGMLA, "segment_langtext");
+xml += getValue(CSBRANCH, "branche");
+xml += getValue(CSBRALA, "branche_langtext");
+xml += getValue(CSINFO1, "infokennzeichen_1");
+xml += getValue(CSINF3A, "infokennzeichen");
+xml += getValue(CSKENN1, "info_kennzeichen");
+xml += getValue(CSSTATUS, "kundenstatus");
+xml += getValue(CSSPERRKZ, "sperrkennzeichen");
+xml += getValue(CSP2TITEL, "titel_person_2");
+xml += getValue(CSP2GEBDT, "geburtstag_person_2");
+xml += getValue(CSADRZUS1, "adresszusatz_1");
+xml += getValue(CSADRZUS2, "adresszusatz_2");
+xml += getValue(contactDataHeadArray, "kontaktdaten_kopf");
+xml += getValue(bankAccounts, "bankverbindungen");
 xml += "&lt;/customer>";
 
-var final_json_output = xml;
+
+var final_xml_output = null;
+
+if (typeof rowLimit == "undefined"){
+	rowLimit = 25000;
+}
+
+if (getProcessCount("r") == rowLimit){
+	final_xml_output = "&lt;customers>" + xml + "&lt;/customers>";
+	xml = "";
+	rowLimit += 25000;
+}
+
+else if (getProcessCount("r") == rowCount){
+		 
+	final_xml_output = "&lt;customers>" + xml + "&lt;/customers>";
+}
+
+else {
+
+trans_Status = CONTINUE_TRANSFORMATION;
+
+}
 </jsScript_script>
       </jsScript>
     </jsScripts>
     <fields>
       <field>
-        <name>final_json_output</name>
-        <rename>final_json_output</rename>
+        <name>final_xml_output</name>
+        <rename>final_xml_output</rename>
         <type>String</type>
         <length>-1</length>
         <precision>-1</precision>
@@ -3385,8 +3787,75 @@ var final_json_output = xml;
       </output>
     </remotesteps>
     <GUI>
-      <xloc>640</xloc>
-      <yloc>688</yloc>
+      <xloc>496</xloc>
+      <yloc>624</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Select values Debitoren</name>
+    <type>SelectValues</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <fields>
+      <select_unspecified>N</select_unspecified>
+      <remove>
+        <name>﻿CDWERK</name>
+      </remove>
+      <remove>
+        <name>CDUNBART</name>
+      </remove>
+      <remove>
+        <name>CDMAAUS</name>
+      </remove>
+      <remove>
+        <name>CDSPEKZ</name>
+      </remove>
+      <remove>
+        <name>CDTBZUS</name>
+      </remove>
+      <remove>
+        <name>CDNRSCH</name>
+      </remove>
+      <remove>
+        <name>CDINF3A</name>
+      </remove>
+      <remove>
+        <name>CDZWECK</name>
+      </remove>
+      <remove>
+        <name>CDOFFEN</name>
+      </remove>
+      <remove>
+        <name>CDMANKY</name>
+      </remove>
+      <remove>
+        <name>CDKREIS</name>
+      </remove>
+      <remove>
+        <name>CDFIFA</name>
+      </remove>
+      <remove>
+        <name>CDFADEB</name>
+      </remove>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>672</xloc>
+      <yloc>816</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -3473,8 +3942,8 @@ var final_json_output = xml;
       </output>
     </remotesteps>
     <GUI>
-      <xloc>592</xloc>
-      <yloc>352</yloc>
+      <xloc>608</xloc>
+      <yloc>384</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -4351,13 +4820,13 @@ var final_json_output = xml;
       </output>
     </remotesteps>
     <GUI>
-      <xloc>576</xloc>
-      <yloc>192</yloc>
+      <xloc>688</xloc>
+      <yloc>160</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>Sort rows by CBKDNNR</name>
+    <name>Sort rows by CBKDNNR and CBZAHLWEG</name>
     <type>SortRows</type>
     <description/>
     <distribute>Y</distribute>
@@ -4383,6 +4852,14 @@ var final_json_output = xml;
         <collator_strength>0</collator_strength>
         <presorted>N</presorted>
       </field>
+      <field>
+        <name>CBZAHLWEG</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
     </fields>
     <attributes/>
     <cluster_schema/>
@@ -4393,8 +4870,8 @@ var final_json_output = xml;
       </output>
     </remotesteps>
     <GUI>
-      <xloc>448</xloc>
-      <yloc>672</yloc>
+      <xloc>304</xloc>
+      <yloc>656</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -4436,7 +4913,57 @@ var final_json_output = xml;
     </remotesteps>
     <GUI>
       <xloc>384</xloc>
-      <yloc>368</yloc>
+      <yloc>432</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Sort rows by CDKDNNR and CDZAHLWEG</name>
+    <type>SortRows</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <directory>%%java.io.tmpdir%%</directory>
+    <prefix>out</prefix>
+    <sort_size>500000</sort_size>
+    <free_memory/>
+    <compress>N</compress>
+    <compress_variable/>
+    <unique_rows>N</unique_rows>
+    <fields>
+      <field>
+        <name>CDKDNNR</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+      <field>
+        <name>CDZAHLWEG</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>512</xloc>
+      <yloc>864</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -4477,8 +5004,8 @@ var final_json_output = xml;
       </output>
     </remotesteps>
     <GUI>
-      <xloc>352</xloc>
-      <yloc>176</yloc>
+      <xloc>496</xloc>
+      <yloc>160</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -4499,7 +5026,7 @@ var final_json_output = xml;
     <enclosure_fix_disabled>N</enclosure_fix_disabled>
     <header>N</header>
     <footer>N</footer>
-    <format>DOS</format>
+    <format>None</format>
     <compression>None</compression>
     <encoding>UTF-8</encoding>
     <endedLine/>
@@ -4511,7 +5038,7 @@ var final_json_output = xml;
       <servlet_output>N</servlet_output>
       <do_not_open_new_file_init>Y</do_not_open_new_file_init>
       <extention>xml</extention>
-      <append>Y</append>
+      <append>N</append>
       <split>N</split>
       <haspartno>N</haspartno>
       <add_date>Y</add_date>
@@ -4521,11 +5048,11 @@ var final_json_output = xml;
       <add_to_result_filenames>Y</add_to_result_filenames>
       <pad>N</pad>
       <fast_dump>N</fast_dump>
-      <splitevery>50000</splitevery>
+      <splitevery>25000</splitevery>
     </file>
     <fields>
       <field>
-        <name>final_json_output</name>
+        <name>final_xml_output</name>
         <type>String</type>
         <format/>
         <currency/>
@@ -4546,8 +5073,8 @@ var final_json_output = xml;
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1456</xloc>
-      <yloc>96</yloc>
+      <xloc>1408</xloc>
+      <yloc>112</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -5223,7 +5750,7 @@ var final_json_output = xml;
       </output>
     </remotesteps>
     <GUI>
-      <xloc>912</xloc>
+      <xloc>976</xloc>
       <yloc>288</yloc>
       <draw>Y</draw>
     </GUI>
@@ -6342,8 +6869,8 @@ var final_json_output = xml;
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1024</xloc>
-      <yloc>624</yloc>
+      <xloc>1104</xloc>
+      <yloc>640</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
