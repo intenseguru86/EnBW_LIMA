@@ -3631,7 +3631,7 @@ xml += getValue(CSVNAME, "vorname");
 xml += getValue(CSNNAME, "nachname");
 xml += getValue(CSNAM2, "name_2_teil")
 xml += getValue(CSNAM3, "name_3_teil");
-xml += getValue(CSANRED, "anredekennzeichen");
+xml += getValue(CSANSPR, "anredekennzeichen");
 xml += getValue(CSVNAM2, "vorname_2");
 xml += getValue(CSNNAM2, "nachname_2");
 xml += getValue(CSSTR, "strasse_kunde");
@@ -4189,7 +4189,7 @@ trans_Status = CONTINUE_TRANSFORMATION;
         <name>CSANSPRP1</name>
       </remove>
       <remove>
-        <name>CSANSPR</name>
+        <name>CSANRED</name>
       </remove>
       <remove>
         <name>CSANSCH</name>
@@ -4286,23 +4286,6 @@ trans_Status = CONTINUE_TRANSFORMATION;
       <meta>
         <name>CSNAM3</name>
         <rename>CSNAM3</rename>
-        <type>String</type>
-        <length>-2</length>
-        <precision>-2</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>
-      <meta>
-        <name>CSANRED</name>
-        <rename>CSANRED</rename>
         <type>String</type>
         <length>-2</length>
         <precision>-2</precision>
@@ -5169,7 +5152,7 @@ trans_Status = CONTINUE_TRANSFORMATION;
         <remove_special_characters>none</remove_special_characters>
       </field>
       <field>
-        <in_stream_name>CSANRED</in_stream_name>
+        <in_stream_name>CSANSPR</in_stream_name>
         <out_stream_name/>
         <trim_type>both</trim_type>
         <lower_upper>none</lower_upper>
@@ -5846,7 +5829,7 @@ trans_Status = CONTINUE_TRANSFORMATION;
         <remove_special_characters>none</remove_special_characters>
       </field>
       <field>
-        <in_stream_name>CSANRED</in_stream_name>
+        <in_stream_name>CSANSPR</in_stream_name>
         <out_stream_name/>
         <trim_type>none</trim_type>
         <lower_upper>none</lower_upper>
