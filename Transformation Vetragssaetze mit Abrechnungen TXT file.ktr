@@ -3757,7 +3757,7 @@ xml += getValue(CVBONBT, "bonus_auf_netto_betrag");
 xml += getValue(CVBONPR, "bonus_auf_netto_prozent");
 xml += getValue(CVEEGKZ, "eeg_kennzeichen");
 xml += getValue(CVEG, "einbaugrund");
-//xml += getValue(CVVERSATZ, "ersatzversorgungsfaehig");
+xml += getValue(CVERSATZ, "ersatzversorgungsfaehig");
 xml += getValue(CVGRZUST, "grundzustaendiger");
 xml += getValue(CVHOEHE, "mittlere_geod_hoehe");
 xml += getValue(CVK1EINH, "einheit_kuendigungsfrist_1");
@@ -3904,17 +3904,17 @@ xml += getValue(CVKUENZU, "kuendigung_zum");
 xml += getValue(CVVORLIF, "alter_lieferant");
 xml += getValue(CVZGRO, "zaehlergroesse");
 xml += getValue(CVZAETAR, "tarifanzahl_zaehleinrichtung");
-//xml += getValue(CVANAW02, "anschlusswert_2");
-//xml += getValue(CVANAW03, "anschlusswert_3");
-//xml += getValue(CVANAW04, "anschlusswert_4");
-//xml += getValue(CVANAW05, "anschlusswert_5");
-//xml += getValue(CVANAW07, "anschlusswert_7");
-//xml += getValue(CVANAW08, "anschlusswert_8");
-//xml += getValue(CVANAW09, "anschlusswert_9");
-//xml += getValue(CVANAW12, "anschlusswert_12");
-//xml += getValue(CVANAW13, "anschlusswert_13");
-//xml += getValue(CVANAW14, "anschlusswert_14");
-//xml += getValue(CVANAW15, "anschlusswert_15");
+xml += getValue(CVAW02, "anschlusswert_2");
+xml += getValue(CVAW03, "anschlusswert_3");
+xml += getValue(CVAW04, "anschlusswert_4");
+xml += getValue(CVAW05, "anschlusswert_5");
+xml += getValue(CVAW07, "anschlusswert_7");
+xml += getValue(CVAW08, "anschlusswert_8");
+xml += getValue(CVAW09, "anschlusswert_9");
+xml += getValue(CVAW12, "anschlusswert_12");
+xml += getValue(CVAW13, "anschlusswert_13");
+xml += getValue(CVAW14, "anschlusswert_14");
+xml += getValue(CVAW15, "anschlusswert_15");
 xml += getValue(CVGRUPPE, "gruppenzuordnung_gabi");
 xml += getValue(CVPHASE, "abrechnungsphase");
 xml += getValue(CVPROID2, "vorgaengerprodukt");
@@ -4014,13 +4014,13 @@ xml += "&lt;/contract>";
 var final_xml_output = null;
 
 if (typeof rowLimit == "undefined"){
-	rowLimit = 1000;
+	rowLimit = 100;
 }
 
 if (getProcessCount("r") == rowLimit){
 	final_xml_output = "&lt;contracts>" + xml + "&lt;/contracts>";
 	xml = "";
-	rowLimit += 1000;
+	rowLimit += 100;
 }
 
 else if (getProcessCount("r") == rowCount){
@@ -4509,48 +4509,6 @@ trans_Status = CONTINUE_TRANSFORMATION;
     </GUI>
   </step>
   <step>
-    <name>Sort rows by CVKDNNR, CVDEBNR, CVOBJNRA</name>
-    <type>SortRows</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <directory>%%java.io.tmpdir%%</directory>
-    <prefix>out</prefix>
-    <sort_size>25000</sort_size>
-    <free_memory/>
-    <compress>N</compress>
-    <compress_variable/>
-    <unique_rows>N</unique_rows>
-    <fields>
-      <field>
-        <name>CVOBJNRA</name>
-        <ascending>Y</ascending>
-        <case_sensitive>N</case_sensitive>
-        <collator_enabled>N</collator_enabled>
-        <collator_strength>0</collator_strength>
-        <presorted>N</presorted>
-      </field>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>592</xloc>
-      <yloc>864</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
     <name>Sort rows by CAKDNNR</name>
     <type>SortRows</type>
     <description/>
@@ -4767,6 +4725,48 @@ trans_Status = CONTINUE_TRANSFORMATION;
     </GUI>
   </step>
   <step>
+    <name>Sort rows by CVKDNNR, CVDEBNR, CVOBJNRA</name>
+    <type>SortRows</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <directory>%%java.io.tmpdir%%</directory>
+    <prefix>out</prefix>
+    <sort_size>25000</sort_size>
+    <free_memory/>
+    <compress>N</compress>
+    <compress_variable/>
+    <unique_rows>N</unique_rows>
+    <fields>
+      <field>
+        <name>CVOBJNRA</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>592</xloc>
+      <yloc>864</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
     <name>Sort rows by CVKDNNR, CVDEBNR, CVZNR, CVEART, CVVES</name>
     <type>SortRows</type>
     <description/>
@@ -4921,7 +4921,7 @@ trans_Status = CONTINUE_TRANSFORMATION;
       <add_to_result_filenames>Y</add_to_result_filenames>
       <pad>N</pad>
       <fast_dump>N</fast_dump>
-      <splitevery>1000</splitevery>
+      <splitevery>100</splitevery>
     </file>
     <fields>
       <field>
@@ -7474,6 +7474,53 @@ trans_Status = CONTINUE_TRANSFORMATION;
     <GUI>
       <xloc>752</xloc>
       <yloc>784</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Unique rows Objektdaten</name>
+    <type>Unique</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <count_rows>N</count_rows>
+    <count_field/>
+    <reject_duplicate_row>N</reject_duplicate_row>
+    <error_description/>
+    <fields>
+      <field>
+        <name>CVKDNNR</name>
+        <case_insensitive>N</case_insensitive>
+      </field>
+      <field>
+        <name>CVDEBNR</name>
+        <case_insensitive>N</case_insensitive>
+      </field>
+      <field>
+        <name>CVEART</name>
+        <case_insensitive>N</case_insensitive>
+      </field>
+      <field>
+        <name>CVVES</name>
+        <case_insensitive>N</case_insensitive>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1120</xloc>
+      <yloc>848</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -11582,53 +11629,6 @@ trans_Status = CONTINUE_TRANSFORMATION;
     <GUI>
       <xloc>160</xloc>
       <yloc>240</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Unique rows Objektdaten</name>
-    <type>Unique</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <count_rows>N</count_rows>
-    <count_field/>
-    <reject_duplicate_row>N</reject_duplicate_row>
-    <error_description/>
-    <fields>
-      <field>
-        <name>CVKDNNR</name>
-        <case_insensitive>N</case_insensitive>
-      </field>
-      <field>
-        <name>CVDEBNR</name>
-        <case_insensitive>N</case_insensitive>
-      </field>
-      <field>
-        <name>CVEART</name>
-        <case_insensitive>N</case_insensitive>
-      </field>
-      <field>
-        <name>CVVES</name>
-        <case_insensitive>N</case_insensitive>
-      </field>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>1120</xloc>
-      <yloc>848</yloc>
       <draw>Y</draw>
     </GUI>
   </step>

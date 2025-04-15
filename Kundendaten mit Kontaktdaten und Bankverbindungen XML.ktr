@@ -1882,7 +1882,7 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <filename>C:\Projekte\EnBW_LIMA\Lima Migrationsdaten\Kundendaten\34V20250128235601548000_VACRMKPF.CSV</filename>
+    <filename>C:\Projekte\EnBW_LIMA\Lima Migrationsdaten\Kundendaten\test_init_load.csv</filename>
     <filename_field/>
     <rownum_field/>
     <include_filename>N</include_filename>
@@ -3679,13 +3679,13 @@ xml += "&lt;/customer>";
 var final_xml_output = null;
 
 if (typeof rowLimit == "undefined"){
-	rowLimit = 25000;
+	rowLimit = 100;
 }
 
 if (getProcessCount("r") == rowLimit){
 	final_xml_output = "&lt;customers>" + xml + "&lt;/customers>";
 	xml = "";
-	rowLimit += 25000;
+	rowLimit += 100;
 }
 
 else if (getProcessCount("r") == rowCount){
@@ -3721,7 +3721,7 @@ trans_Status = CONTINUE_TRANSFORMATION;
     </remotesteps>
     <GUI>
       <xloc>1312</xloc>
-      <yloc>224</yloc>
+      <yloc>272</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -5031,7 +5031,7 @@ trans_Status = CONTINUE_TRANSFORMATION;
       <add_to_result_filenames>Y</add_to_result_filenames>
       <pad>N</pad>
       <fast_dump>N</fast_dump>
-      <splitevery>25000</splitevery>
+      <splitevery>100</splitevery>
     </file>
     <fields>
       <field>
@@ -5056,8 +5056,8 @@ trans_Status = CONTINUE_TRANSFORMATION;
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1408</xloc>
-      <yloc>112</yloc>
+      <xloc>1440</xloc>
+      <yloc>64</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
