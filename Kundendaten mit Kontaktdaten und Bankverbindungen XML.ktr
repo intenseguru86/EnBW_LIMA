@@ -498,11 +498,6 @@
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Filter out 'Kundenstatus=OO or OE' rows</from>
-      <to>Sort rows by CSKDNNR</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
       <from>Sort rows by CDKDNNR and CDZAHLWEG</from>
       <to>Select values Debitoren</to>
       <enabled>Y</enabled>
@@ -575,6 +570,16 @@
     <hop>
       <from>Modified JavaScript value</from>
       <to>S3 file output</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Filter out 'Kundenstatus=OO or OE' rows</from>
+      <to>Replace &amp; in string</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Replace &amp; in string</from>
+      <to>Sort rows by CSKDNNR</to>
       <enabled>Y</enabled>
     </hop>
   </order>
@@ -3666,6 +3671,7 @@ xml += getValue(CSP2TITEL, "titel_person_2");
 xml += getValue(CSP2GEBDT, "geburtstag_person_2");
 xml += getValue(CSADRZUS1, "adresszusatz_1");
 xml += getValue(CSADRZUS2, "adresszusatz_2");
+xml += getValue(CSADRART, "adressart");
 xml += getValue(contactDataHeadArray, "kontaktdaten_kopf");
 xml += getValue(bankAccounts, "bankverbindungen");
 xml += "&lt;/customer>";
@@ -4178,232 +4184,22 @@ trans_Status = CONTINUE_TRANSFORMATION;
     <fields>
       <select_unspecified>N</select_unspecified>
       <remove>
-        <name>CSW10</name>
+        <name>CSAENDT</name>
       </remove>
       <remove>
-        <name>CSW09</name>
+        <name>CSAENZT</name>
       </remove>
       <remove>
-        <name>CSW08</name>
+        <name>CSAKTDT</name>
       </remove>
       <remove>
-        <name>CSW07</name>
+        <name>CSANLNR</name>
       </remove>
       <remove>
-        <name>CSW06</name>
+        <name>CSANONYMDT</name>
       </remove>
       <remove>
-        <name>CSW05</name>
-      </remove>
-      <remove>
-        <name>CSW04</name>
-      </remove>
-      <remove>
-        <name>CSW03</name>
-      </remove>
-      <remove>
-        <name>CSW02</name>
-      </remove>
-      <remove>
-        <name>CSW01</name>
-      </remove>
-      <remove>
-        <name>CSUNBART</name>
-      </remove>
-      <remove>
-        <name>CST10</name>
-      </remove>
-      <remove>
-        <name>CST09</name>
-      </remove>
-      <remove>
-        <name>CST08</name>
-      </remove>
-      <remove>
-        <name>CST07</name>
-      </remove>
-      <remove>
-        <name>CST06</name>
-      </remove>
-      <remove>
-        <name>CST05</name>
-      </remove>
-      <remove>
-        <name>CST04</name>
-      </remove>
-      <remove>
-        <name>CST03</name>
-      </remove>
-      <remove>
-        <name>CST02</name>
-      </remove>
-      <remove>
-        <name>CST01</name>
-      </remove>
-      <remove>
-        <name>CSSTRASSE</name>
-      </remove>
-      <remove>
-        <name>CSSTRASA</name>
-      </remove>
-      <remove>
-        <name>CSSTAKZ</name>
-      </remove>
-      <remove>
-        <name>CSSORTST</name>
-      </remove>
-      <remove>
-        <name>CSSBTEXT6</name>
-      </remove>
-      <remove>
-        <name>CSSBTEXT5</name>
-      </remove>
-      <remove>
-        <name>CSSBTEXT4</name>
-      </remove>
-      <remove>
-        <name>CSSBTEXT3</name>
-      </remove>
-      <remove>
-        <name>CSSBTEXT2</name>
-      </remove>
-      <remove>
-        <name>CSSBTEXT1</name>
-      </remove>
-      <remove>
-        <name>CSSAMBU</name>
-      </remove>
-      <remove>
-        <name>CSSACHB</name>
-      </remove>
-      <remove>
-        <name>CSREODT</name>
-      </remove>
-      <remove>
-        <name>CSPOSTFACH</name>
-      </remove>
-      <remove>
-        <name>CSPOSTCODE</name>
-      </remove>
-      <remove>
-        <name>CSPOKAT</name>
-      </remove>
-      <remove>
-        <name>CSP2LVNAME</name>
-      </remove>
-      <remove>
-        <name>CSP2LNNAME</name>
-      </remove>
-      <remove>
-        <name>CSP2ANSPR</name>
-      </remove>
-      <remove>
-        <name>CSP2ANSCH</name>
-      </remove>
-      <remove>
-        <name>CSP2ANRED</name>
-      </remove>
-      <remove>
-        <name>CSP2ANRAN</name>
-      </remove>
-      <remove>
-        <name>CSP1TITEL</name>
-      </remove>
-      <remove>
-        <name>CSP1LVNAME</name>
-      </remove>
-      <remove>
-        <name>CSP1LNNAME</name>
-      </remove>
-      <remove>
-        <name>CSNAME</name>
-      </remove>
-      <remove>
-        <name>CSLLOGIN</name>
-      </remove>
-      <remove>
-        <name>CSKENN6</name>
-      </remove>
-      <remove>
-        <name>CSKENN5</name>
-      </remove>
-      <remove>
-        <name>CSKENN4</name>
-      </remove>
-      <remove>
-        <name>CSKENN3</name>
-      </remove>
-      <remove>
-        <name>CSKENN2</name>
-      </remove>
-      <remove>
-        <name>CSKDNNA</name>
-      </remove>
-      <remove>
-        <name>CSINTBR</name>
-      </remove>
-      <remove>
-        <name>CSINFO3</name>
-      </remove>
-      <remove>
-        <name>CSINFO2</name>
-      </remove>
-      <remove>
-        <name>CSHAUSNRST</name>
-      </remove>
-      <remove>
-        <name>CSHAUSNR</name>
-      </remove>
-      <remove>
-        <name>CSHANDLE</name>
-      </remove>
-      <remove>
-        <name>CSFIRNR</name>
-      </remove>
-      <remove>
-        <name>CSFAXVW</name>
-      </remove>
-      <remove>
-        <name>CSFAXNR</name>
-      </remove>
-      <remove>
-        <name>CSFANAME2</name>
-      </remove>
-      <remove>
-        <name>CSFANAME1</name>
-      </remove>
-      <remove>
-        <name>CSEINWIL</name>
-      </remove>
-      <remove>
-        <name>CSCITY</name>
-      </remove>
-      <remove>
-        <name>CSBITEXT6</name>
-      </remove>
-      <remove>
-        <name>CSBITEXT5</name>
-      </remove>
-      <remove>
-        <name>CSBITEXT4</name>
-      </remove>
-      <remove>
-        <name>CSBITEXT3</name>
-      </remove>
-      <remove>
-        <name>CSBITEXT2</name>
-      </remove>
-      <remove>
-        <name>CSBITEXT1</name>
-      </remove>
-      <remove>
-        <name>CSANZLOGIN</name>
-      </remove>
-      <remove>
-        <name>CSANSPRP2</name>
-      </remove>
-      <remove>
-        <name>CSANSPRP1</name>
+        <name>CSANRAN</name>
       </remove>
       <remove>
         <name>CSANRED</name>
@@ -4412,25 +4208,232 @@ trans_Status = CONTINUE_TRANSFORMATION;
         <name>CSANSCH</name>
       </remove>
       <remove>
-        <name>CSANRAN</name>
+        <name>CSANSPRP1</name>
       </remove>
       <remove>
-        <name>CSANONYMDT</name>
+        <name>CSANSPRP2</name>
       </remove>
       <remove>
-        <name>CSANLNR</name>
+        <name>CSANZLOGIN</name>
       </remove>
       <remove>
-        <name>CSAKTDT</name>
+        <name>CSBITEXT1</name>
       </remove>
       <remove>
-        <name>CSAENZT</name>
+        <name>CSBITEXT2</name>
       </remove>
       <remove>
-        <name>CSAENDT</name>
+        <name>CSBITEXT3</name>
       </remove>
       <remove>
-        <name>CSADRART</name>
+        <name>CSBITEXT4</name>
+      </remove>
+      <remove>
+        <name>CSBITEXT5</name>
+      </remove>
+      <remove>
+        <name>CSBITEXT6</name>
+      </remove>
+      <remove>
+        <name>CSCITY</name>
+      </remove>
+      <remove>
+        <name>CSEINWIL</name>
+      </remove>
+      <remove>
+        <name>CSFANAME1</name>
+      </remove>
+      <remove>
+        <name>CSFANAME2</name>
+      </remove>
+      <remove>
+        <name>CSFAXNR</name>
+      </remove>
+      <remove>
+        <name>CSFAXVW</name>
+      </remove>
+      <remove>
+        <name>CSFIRNR</name>
+      </remove>
+      <remove>
+        <name>CSHANDLE</name>
+      </remove>
+      <remove>
+        <name>CSHAUSNR</name>
+      </remove>
+      <remove>
+        <name>CSHAUSNRST</name>
+      </remove>
+      <remove>
+        <name>CSINFO2</name>
+      </remove>
+      <remove>
+        <name>CSINFO3</name>
+      </remove>
+      <remove>
+        <name>CSINTBR</name>
+      </remove>
+      <remove>
+        <name>CSKDNNA</name>
+      </remove>
+      <remove>
+        <name>CSKENN2</name>
+      </remove>
+      <remove>
+        <name>CSKENN3</name>
+      </remove>
+      <remove>
+        <name>CSKENN4</name>
+      </remove>
+      <remove>
+        <name>CSKENN5</name>
+      </remove>
+      <remove>
+        <name>CSKENN6</name>
+      </remove>
+      <remove>
+        <name>CSLLOGIN</name>
+      </remove>
+      <remove>
+        <name>CSNAME</name>
+      </remove>
+      <remove>
+        <name>CSP1LNNAME</name>
+      </remove>
+      <remove>
+        <name>CSP1LVNAME</name>
+      </remove>
+      <remove>
+        <name>CSP1TITEL</name>
+      </remove>
+      <remove>
+        <name>CSP2ANRAN</name>
+      </remove>
+      <remove>
+        <name>CSP2ANRED</name>
+      </remove>
+      <remove>
+        <name>CSP2ANSCH</name>
+      </remove>
+      <remove>
+        <name>CSP2ANSPR</name>
+      </remove>
+      <remove>
+        <name>CSP2LNNAME</name>
+      </remove>
+      <remove>
+        <name>CSP2LVNAME</name>
+      </remove>
+      <remove>
+        <name>CSPOKAT</name>
+      </remove>
+      <remove>
+        <name>CSPOSTCODE</name>
+      </remove>
+      <remove>
+        <name>CSPOSTFACH</name>
+      </remove>
+      <remove>
+        <name>CSREODT</name>
+      </remove>
+      <remove>
+        <name>CSSACHB</name>
+      </remove>
+      <remove>
+        <name>CSSAMBU</name>
+      </remove>
+      <remove>
+        <name>CSSBTEXT1</name>
+      </remove>
+      <remove>
+        <name>CSSBTEXT2</name>
+      </remove>
+      <remove>
+        <name>CSSBTEXT3</name>
+      </remove>
+      <remove>
+        <name>CSSBTEXT4</name>
+      </remove>
+      <remove>
+        <name>CSSBTEXT5</name>
+      </remove>
+      <remove>
+        <name>CSSBTEXT6</name>
+      </remove>
+      <remove>
+        <name>CSSORTST</name>
+      </remove>
+      <remove>
+        <name>CSSTAKZ</name>
+      </remove>
+      <remove>
+        <name>CSSTRASA</name>
+      </remove>
+      <remove>
+        <name>CSSTRASSE</name>
+      </remove>
+      <remove>
+        <name>CST01</name>
+      </remove>
+      <remove>
+        <name>CST02</name>
+      </remove>
+      <remove>
+        <name>CST03</name>
+      </remove>
+      <remove>
+        <name>CST04</name>
+      </remove>
+      <remove>
+        <name>CST05</name>
+      </remove>
+      <remove>
+        <name>CST06</name>
+      </remove>
+      <remove>
+        <name>CST07</name>
+      </remove>
+      <remove>
+        <name>CST08</name>
+      </remove>
+      <remove>
+        <name>CST09</name>
+      </remove>
+      <remove>
+        <name>CST10</name>
+      </remove>
+      <remove>
+        <name>CSUNBART</name>
+      </remove>
+      <remove>
+        <name>CSW01</name>
+      </remove>
+      <remove>
+        <name>CSW02</name>
+      </remove>
+      <remove>
+        <name>CSW03</name>
+      </remove>
+      <remove>
+        <name>CSW04</name>
+      </remove>
+      <remove>
+        <name>CSW05</name>
+      </remove>
+      <remove>
+        <name>CSW06</name>
+      </remove>
+      <remove>
+        <name>CSW07</name>
+      </remove>
+      <remove>
+        <name>CSW08</name>
+      </remove>
+      <remove>
+        <name>CSW09</name>
+      </remove>
+      <remove>
+        <name>CSW10</name>
       </remove>
       <meta>
         <name>CSKDNNR</name>
@@ -5010,6 +5013,23 @@ trans_Status = CONTINUE_TRANSFORMATION;
         <currency_symbol/>
         <storage_type/>
       </meta>
+      <meta>
+        <name>CSADRART</name>
+        <rename>CSADRART</rename>
+        <type>String</type>
+        <length>-2</length>
+        <precision>-2</precision>
+        <conversion_mask/>
+        <date_format_lenient>false</date_format_lenient>
+        <date_format_locale/>
+        <date_format_timezone/>
+        <lenient_string_to_number>false</lenient_string_to_number>
+        <encoding/>
+        <decimal_symbol/>
+        <grouping_symbol/>
+        <currency_symbol/>
+        <storage_type/>
+      </meta>
     </fields>
     <attributes/>
     <cluster_schema/>
@@ -5360,6 +5380,93 @@ trans_Status = CONTINUE_TRANSFORMATION;
     <GUI>
       <xloc>1312</xloc>
       <yloc>544</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Replace &amp; in string</name>
+    <type>ReplaceString</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <fields>
+      <field>
+        <in_stream_name>CSVNAME</in_stream_name>
+        <out_stream_name/>
+        <use_regex>no</use_regex>
+        <replace_string>&amp;</replace_string>
+        <replace_by_string>&amp;amp;</replace_by_string>
+        <set_empty_string>N</set_empty_string>
+        <replace_field_by_string/>
+        <whole_word>no</whole_word>
+        <case_sensitive>yes</case_sensitive>
+        <is_unicode>no</is_unicode>
+      </field>
+      <field>
+        <in_stream_name>CSNNAME</in_stream_name>
+        <out_stream_name/>
+        <use_regex>no</use_regex>
+        <replace_string>&amp;</replace_string>
+        <replace_by_string>&amp;amp;</replace_by_string>
+        <set_empty_string>N</set_empty_string>
+        <replace_field_by_string/>
+        <whole_word>no</whole_word>
+        <case_sensitive>yes</case_sensitive>
+        <is_unicode>no</is_unicode>
+      </field>
+      <field>
+        <in_stream_name>CSNAME</in_stream_name>
+        <out_stream_name/>
+        <use_regex>no</use_regex>
+        <replace_string>&amp;</replace_string>
+        <replace_by_string>&amp;amp;</replace_by_string>
+        <set_empty_string>N</set_empty_string>
+        <replace_field_by_string/>
+        <whole_word>no</whole_word>
+        <case_sensitive>yes</case_sensitive>
+        <is_unicode>no</is_unicode>
+      </field>
+      <field>
+        <in_stream_name>CSNAM2</in_stream_name>
+        <out_stream_name/>
+        <use_regex>no</use_regex>
+        <replace_string>&amp;</replace_string>
+        <replace_by_string>&amp;amp;</replace_by_string>
+        <set_empty_string>N</set_empty_string>
+        <replace_field_by_string/>
+        <whole_word>no</whole_word>
+        <case_sensitive>yes</case_sensitive>
+        <is_unicode>no</is_unicode>
+      </field>
+      <field>
+        <in_stream_name>CSNAM3</in_stream_name>
+        <out_stream_name/>
+        <use_regex>no</use_regex>
+        <replace_string>&amp;</replace_string>
+        <replace_by_string>&amp;amp;</replace_by_string>
+        <set_empty_string>N</set_empty_string>
+        <replace_field_by_string/>
+        <whole_word>no</whole_word>
+        <case_sensitive>yes</case_sensitive>
+        <is_unicode>no</is_unicode>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>368</xloc>
+      <yloc>192</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
